@@ -1,58 +1,185 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# StoryStudio
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**An AI-assisted story development and video production workspace.**
 
-## About Laravel
+StoryStudio is a web application designed to organize story ideas, develop scripts, and support the production of video content for platforms such as YouTube. The long-term goal is to bring story development, character planning, scene creation, audio, video production, and publishing workflows together in one workspace.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Currently Implemented
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Dashboard** — Overview of the project and story library.
+- **Story Library** — Create and save stories with titles, genres, descriptions, and story content.
+- **Script Writer** — Create and save script briefs containing a title, genre, target audience, story idea, and desired length.
+- **MySQL Database** — Persistent storage for stories and script briefs.
+- **Validation and feedback** — Required-field validation and success messages when saving records.
 
-## Learning Laravel
+### Planned Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- AI-powered script generation.
+- Character profiles and character consistency tools.
+- Scene-by-scene storyboards and visual prompts.
+- Video production planning and tracking.
+- Voice-over and audio tools.
+- Production queue and content calendar.
+- YouTube publishing and channel management.
+- User authentication and account management.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+*Planned features are not yet implemented and may require external APIs or services.*
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Technology Stack
 
-## Agentic Development
+- **Backend:** PHP and Laravel
+- **Database:** MySQL
+- **Frontend:** Blade templates, HTML, and CSS
+- **Dependency management:** Composer
+- **Frontend build tools:** Node.js and npm, as required by the installed frontend dependencies
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Server Requirements
+
+For a typical production installation, use a server that meets these requirements:
+
+| Component | Requirement |
+|---|---|
+| Operating system | Linux server recommended; Windows development environments are also supported |
+| PHP | PHP 8.3 or newer, compatible with the project's Laravel version |
+| Composer | Composer 2.x |
+| Database | MySQL 8.0 or a compatible supported database |
+| PHP extensions | PDO, PDO MySQL, Mbstring, OpenSSL, XML, Ctype, JSON, BCMath, Fileinfo, Tokenizer, and other extensions required by Laravel |
+| Web server | Nginx or Apache configured for Laravel |
+| Node.js and npm | Required when installing dependencies and building frontend assets that use Vite |
+| HTTPS | Required for a publicly accessible production deployment |
+
+Check the project's `composer.json`, `package.json`, and Laravel version before deploying to confirm the exact dependency requirements.
+
+## Installation
+
+### 1. Install the Prerequisites
+
+Install PHP, Composer, MySQL, Git, and the other required dependencies on your development computer or server.
+
+If the project uses Vite assets, also install Node.js and npm.
+
+### 2. Clone the Repository
+
+Replace `YOUR-USERNAME` with the GitHub account or organization that owns the repository.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/YOUR-USERNAME/StoryStudio.git
+cd StoryStudio
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 3. Install PHP Dependencies
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Configure the Environment
 
-## Code of Conduct
+Create your local environment configuration file.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+On Linux or macOS:
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+On Windows Command Prompt:
+
+```bat
+copy .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+### 5. Create the Database
+
+Create an empty MySQL database for StoryStudio, for example:
+
+```sql
+CREATE DATABASE story
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+```
+
+Update the database settings in your `.env` file:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=story
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+```
+
+Use the actual database credentials for your installation. Do not commit passwords or other secrets to GitHub.
+
+### 6. Run Database Migrations
+
+Create the required tables:
+
+```bash
+php artisan migrate
+```
+
+This creates the tables defined by the project's migrations, including the story and script storage tables.
+
+### 7. Install and Build Frontend Assets
+
+If the project includes a `package.json` and uses Vite, run:
+
+```bash
+npm install
+npm run build
+```
+
+### 8. Start the Development Server
+
+For local development, run:
+
+```bash
+php artisan serve
+```
+
+Open the address displayed by Laravel, usually:
+
+http://127.0.0.1:8000
+
+The StoryStudio dashboard should appear.
+
+## Development Notes
+
+- Keep your `.env` file private and never commit production credentials.
+- Use a separate database for development and production.
+- Run new database migrations after pulling changes that introduce migrations.
+- Back up the database before making significant changes to stored data.
+- Do not use Laravel's development server as a public production server.
+
+## Production Deployment
+
+For production, configure Apache or Nginx to serve the application's `public` directory. Configure PHP and the database, install dependencies, run migrations, enable HTTPS, and set appropriate file permissions.
+
+Set the environment to production and disable detailed error display:
+
+```dotenv
+APP_ENV=production
+APP_DEBUG=false
+```
+
+Use a secure application key and production database credentials. Configure logging, backups, queue workers, and scheduled tasks as required by the features enabled.
+
+**Security note:** Authentication and authorization must be implemented and reviewed before making a multi-user deployment publicly accessible.
+
+## Project Status
+
+StoryStudio is under active development. Story creation, script brief storage, and the basic dashboard are implemented. AI generation, automated video creation, audio production, and YouTube publishing remain future development goals.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Add your chosen open-source or proprietary license before distributing the project. Until a license is specified, do not assume that others have permission to reuse or redistribute the code.
